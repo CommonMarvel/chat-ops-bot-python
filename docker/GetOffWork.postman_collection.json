@@ -1,0 +1,170 @@
+{
+  "info": {
+    "_postman_id": "e5957004-cf3c-4fc7-a291-faaa30eed713",
+    "name": "GetOffWork",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "5287ea4d-844c-4594-85cc-354a43fea18f",
+            "exec": [
+              "function bin2string(array){",
+              "\tvar result = \"\";",
+              "\tfor(var i = 0; i < array.length; ++i){",
+              "\t\tresult+= (String.fromCharCode(array[i]));",
+              "\t}",
+              "\treturn result;",
+              "}",
+              "",
+              "pm.test(\"Get Token\", function () {",
+              "    const stream = JSON.stringify(pm.response.stream);",
+              "    const data = stream.replace(\"{\\\"type\\\":\\\"Buffer\\\",\\\"data\\\":[\", \"\").replace(\"]}\", \"\").split(\",\");",
+              "    const content = bin2string(data);",
+              "    const token = content.substring(content.indexOf(\"name=\\\"token\\\" value=\\\"\") + 20, content.indexOf(\"name=\\\"token\\\" value=\\\"\") + 84);",
+              "    ",
+              "    pm.globals.set(\"token\", token);",
+              "    ",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "inputCompany",
+              "value": "xteamstudio",
+              "type": "text"
+            },
+            {
+              "key": "inputID",
+              "value": "{{account}}",
+              "type": "text"
+            },
+            {
+              "key": "inputPassword",
+              "value": "{{password}}",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://cloud.nueip.com/login/index/param",
+          "protocol": "https",
+          "host": [
+            "cloud",
+            "nueip",
+            "com"
+          ],
+          "path": [
+            "login",
+            "index",
+            "param"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Check",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "8ff84be0-7e71-4c90-96be-e10d41e75ebd",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "action",
+              "value": "add",
+              "type": "text"
+            },
+            {
+              "key": "id",
+              "value": "2",
+              "type": "text"
+            },
+            {
+              "key": "attendance_time",
+              "value": "2019-7-1 18:06:35",
+              "type": "text"
+            },
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "text"
+            },
+            {
+              "key": "lat",
+              "value": "25.074556",
+              "type": "text"
+            },
+            {
+              "key": "lng",
+              "value": "121.57587749999999",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://cloud.nueip.com/time_clocks/ajax",
+          "protocol": "https",
+          "host": [
+            "cloud",
+            "nueip",
+            "com"
+          ],
+          "path": [
+            "time_clocks",
+            "ajax"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "93ab57e7-b614-47c2-bcc7-64ca0fa88131",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "91c2f06b-9d30-4b75-90ac-fcea8a54e5ec",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
